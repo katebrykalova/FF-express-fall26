@@ -1,0 +1,42 @@
+<!--
+<h1>{{title}}</h1>
+<p>Name: {{name}}</p>
+<p>Animal: {{animal}}</p>
+-->
+<!-- Voting display data -->
+<h2>Coffee votes</h2>
+<ul>
+  {{#each coffeeVotes}}
+    <li>{{@key}}: {{this}}</li>
+  {{/each}}
+</ul>
+<h2>Cups per day votes</h2>
+<ul>
+  {{#each cupsVotes}}
+    <li>{{@key}}: {{this}}</li>
+  {{/each}}
+</ul>
+<a href="/form">Vote again</a> | <button id="clearBtn">Clear my votes</button>
+<p id="message"></p>
+<script>
+  let clearBtn = document.getElementById("clearBtn");
+  let message = document.getElementById("message");
+
+  clearBtn.addEventListener("click", function () {
+    //option 1: ignore the response, go somewhere else
+        /*
+        fetch("/clear", { method: "DELETE" })
+        .then(function () {
+            window.location.href = "/form";
+        });
+        */
+        // Read the response and show it on this page
+            fetch("/clear", { method: "DELETE" })
+            .then(function (response) {
+                return response.text();
+            })
+            .then(function (text) {
+                message.innerHTML = text;
+            });
+  });
+</script>

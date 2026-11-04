@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/katebrykalova/FF-express-fall226#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.7",
     "express": "^5.3.0",
     "hbs": "^4.4.0"
   }
