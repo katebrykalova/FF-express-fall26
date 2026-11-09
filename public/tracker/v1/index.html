@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log a Calc Session</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="container narrow">
+        <h1>Log a Calc Session</h1>
+
+        <form id="session-form" class="card">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="problems">Problems solved</label>
+            <input type="number" id="problems" name="problems" min="0" step="1" required>
+
+            <label for="topic">Topic</label>
+            <select id="topic" name="topic" required>
+                <option value="Limits">Limits</option>
+                <option value="Derivatives">Derivatives</option>
+                <option value="Applications of Derivatives">Applications of Derivatives</option>
+                <option value="Integrals">Integrals</option>
+            </select>
+
+            <button type="submit">Save session</button>
+            <p id="message" class="message" aria-live="polite"></p>
+        </form>
+
+        <p><a href="dashboard.html">View dashboard →</a></p>
+    </main>
+
+    <script src="js/tracker.js"></script>
+</body>
+</html>
