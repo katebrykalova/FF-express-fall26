@@ -1,0 +1,232 @@
+/* =========================================================
+   Calc Practice Tracker v2 — styles
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #F9FAFB;
+    color: #111827;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height: 1.5;
+}
+
+h1 {
+    margin: 0 0 20px;
+    font-size: 1.6rem;
+}
+
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 16px;
+}
+
+.page-narrow {
+    max-width: 460px;
+}
+
+/* ---------- cards ---------- */
+
+.card {
+    background: #FFFFFF;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(17, 24, 39, 0.07), 0 1px 2px rgba(17, 24, 39, 0.05);
+    padding: 20px;
+}
+
+.card-title {
+    margin: 0 0 12px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+/* ---------- form ---------- */
+
+.field {
+    margin-bottom: 16px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    font: inherit;
+    border: 1px solid #D1D5DB;
+    border-radius: 8px;
+    background: #FFFFFF;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+input.input-invalid {
+    border-color: #DC2626;
+}
+
+.field-error {
+    margin: 6px 0 0;
+    min-height: 1em;
+    color: #DC2626;
+    font-size: 0.875rem;
+}
+
+.field-error:empty {
+    margin: 0;
+    min-height: 0;
+}
+
+.form-message {
+    margin: 16px 0 0;
+    font-weight: 600;
+}
+
+.form-message:empty {
+    margin: 0;
+}
+
+.msg-success {
+    color: #059669;
+}
+
+.msg-error {
+    color: #DC2626;
+}
+
+/* ---------- buttons and links ---------- */
+
+.btn {
+    padding: 10px 18px;
+    font: inherit;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.btn-primary {
+    width: 100%;
+    background: #111827;
+    color: #FFFFFF;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #374151;
+}
+
+.btn-danger {
+    background: #FEE2E2;
+    color: #B91C1C;
+}
+
+.btn-danger:hover {
+    background: #FECACA;
+}
+
+.link {
+    display: inline-block;
+    margin-top: 16px;
+    color: #2563EB;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+/* ---------- dashboard ---------- */
+
+.dash-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.dash-header h1 {
+    margin: 0;
+}
+
+.dash-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.dash-actions .link {
+    margin-top: 0;
+}
+
+.dash-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.sketch-card {
+    grid-column: 1 / -1;
+}
+
+/* Let grid items shrink below their content width, so the p5 canvas and
+   Chart.js canvases can't hold the grid open when the window gets narrower */
+.dash-grid > * {
+    min-width: 0;
+}
+
+.chart-wrap {
+    position: relative;
+    height: 320px;
+}
+
+.empty-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 320px;
+    margin: 0;
+    color: #6B7280;
+    text-align: center;
+}
+
+.empty-msg[hidden],
+.chart-wrap[hidden] {
+    display: none;
+}
+
+#sketchHolder {
+    width: 100%;
+    overflow: hidden; /* old canvas width never pushes the card wider during a resize */
+    line-height: 0; /* removes the gap under the canvas */
+}
+
+#sketchHolder canvas {
+    border-radius: 10px;
+}
+
+@media (max-width: 700px) {
+    .dash-grid {
+        grid-template-columns: 1fr;
+    }
+}

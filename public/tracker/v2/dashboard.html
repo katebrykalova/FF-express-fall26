@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calc Practice Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.9.4/lib/p5.min.js"></script>
+</head>
+<body>
+    <main class="page">
+        <header class="dash-header">
+            <h1>Calc Practice Dashboard</h1>
+            <div class="dash-actions">
+                <a href="index.html" class="link">&larr; Log a session</a>
+                <button type="button" id="clearBtn" class="btn btn-danger">Clear all data</button>
+            </div>
+        </header>
+
+        <div class="dash-grid">
+            <section class="card chart-card">
+                <div class="chart-wrap">
+                    <canvas id="barChart"></canvas>
+                </div>
+                <p class="empty-msg" id="barEmpty" hidden>No sessions yet — log one first!</p>
+            </section>
+
+            <section class="card chart-card">
+                <div class="chart-wrap">
+                    <canvas id="doughnutChart"></canvas>
+                </div>
+                <p class="empty-msg" id="doughnutEmpty" hidden>No sessions yet — log one first!</p>
+            </section>
+
+            <section class="card sketch-card">
+                <h2 class="card-title">Study Skyline</h2>
+                <div id="sketchHolder"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- sketch.js first so dashboard.js can call window.updateSkyline -->
+    <script src="js/sketch.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

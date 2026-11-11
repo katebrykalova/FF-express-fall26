@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log a Calc Session</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <main class="page page-narrow">
+        <div class="card">
+            <h1>Log a Calc Session</h1>
+
+            <form id="sessionForm" novalidate>
+                <div class="field">
+                    <label for="date">Date</label>
+                    <input type="date" id="date" name="date">
+                    <p class="field-error" id="dateError"></p>
+                </div>
+
+                <div class="field">
+                    <label for="problems">Problems solved</label>
+                    <input type="number" id="problems" name="problems" min="1" max="100" step="1" inputmode="numeric">
+                    <p class="field-error" id="problemsError"></p>
+                </div>
+
+                <div class="field">
+                    <label for="topic">Topic</label>
+                    <select id="topic" name="topic">
+                        <option value="Limits">Limits</option>
+                        <option value="Derivatives">Derivatives</option>
+                        <option value="Applications of Derivatives">Applications of Derivatives</option>
+                        <option value="Integrals">Integrals</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="saveBtn" class="btn btn-primary">Save session</button>
+            </form>
+
+            <p id="formMessage" class="form-message" aria-live="polite"></p>
+
+            <a href="dashboard.html" class="link">View dashboard &rarr;</a>
+        </div>
+    </main>
+
+    <script src="js/tracker.js"></script>
+</body>
+</html>

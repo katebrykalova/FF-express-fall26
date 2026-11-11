@@ -153,6 +153,114 @@ app.delete("/tracker/v1/clear", (req, res) => {
 
 // ----- end Tracker v1 routes -----
 
+// ----- Tracker v2 routes -----
+// Reuses TRACKER_TOPICS and TRACKER_COOKIE_OPTIONS from the v1 block.
+
+/**
+ * Reads the calcLog_v2 cookie and returns it as an array.
+ * Returns an empty array if the cookie is missing or not valid JSON.
+ */
+function readTrackerLogV2(req) {
+    const raw = req.cookies.calcLog_v2;
+    if (raw === undefined) {
+        return [];
+    }
+    try {
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (err) {
+        return [];
+    }
+}
+
+/**
+ * Converts the submitted "problems" value to a number.
+ * Only accepts real numbers or non-empty strings; anything else becomes NaN
+ * (so null, true, "" and arrays can't sneak through as 0 or 1).
+ */
+function parseProblemsV2(value) {
+    if (typeof value === "number") {
+        return value;
+    }
+    if (typeof value === "string" && value.trim() !== "") {
+        return Number(value);
+    }
+    return NaN;
+}
+
+/**
+ * Returns true if the string is YYYY-MM-DD AND a real calendar date
+ * (rejects things like 2026-02-30 or 2026-13-01).
+ */
+function isValidTrackerDateV2(date) {
+    if (typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+        return false;
+    }
+    const [year, month, day] = date.split("-").map(Number);
+    const check = new Date(Date.UTC(year, month - 1, day));
+    return check.getUTCFullYear() === year &&
+        check.getUTCMonth() === month - 1 &&
+        check.getUTCDate() === day;
+}
+
+/**
+ * POST /tracker/v2/save
+ * Validates one entry, adds it to the cookie, keeps only the 30 most recent,
+ * and returns the number of stored entries.
+ */
+app.post("/tracker/v2/save", (req, res) => {
+    const body = req.body || {};
+    const problems = parseProblemsV2(body.problems);
+    const topic = body.topic;
+    const date = body.date;
+
+    if (!Number.isInteger(problems) || problems < 1 || problems > 100) {
+        return res.status(400).json({
+            success: false,
+            error: "Problems must be a whole number from 1 to 100."
+        });
+    }
+    if (!TRACKER_TOPICS.includes(topic)) {
+        return res.status(400).json({
+            success: false,
+            error: "Topic must be one of: " + TRACKER_TOPICS.join(", ") + "."
+        });
+    }
+    if (!isValidTrackerDateV2(date)) {
+        return res.status(400).json({
+            success: false,
+            error: "Date must be a real date in YYYY-MM-DD format."
+        });
+    }
+
+    let log = readTrackerLogV2(req);
+    log.push({ date: date, problems: problems, topic: topic });
+    log = log.slice(-30); // keep the last 30 entries so the cookie stays under 4 KB
+
+    res.cookie("calcLog_v2", JSON.stringify(log), TRACKER_COOKIE_OPTIONS);
+    res.json({ success: true, count: log.length });
+});
+
+/**
+ * GET /tracker/v2/data
+ * Sends back the saved entries as a JSON array (empty array if there is no cookie).
+ */
+app.get("/tracker/v2/data", (req, res) => {
+    res.json(readTrackerLogV2(req));
+});
+
+/**
+ * DELETE /tracker/v2/clear
+ * Deletes the calcLog_v2 cookie.
+ */
+app.delete("/tracker/v2/clear", (req, res) => {
+    res.clearCookie("calcLog_v2", { httpOnly: true });
+    res.json({ success: true });
+});
+
+// ----- end Tracker v2 routes -----
+
+
 
 app.get("/:name", (req,res)=>{
     res.send("My name is: " + req.params.name);
