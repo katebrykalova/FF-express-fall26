@@ -1,6 +1,6 @@
 # Cookie Tracker – Calc Practice Sessions
 
-🎥 **Video walkthrough:** PASTE_VIDEO_LINK_HERE
+🎥 **Video walkthrough:** (https://drive.google.com/file/d/1S5jEx99ESchbODBEFp9DytI8GBMl_NaL/view?usp=sharing)
 
 ## What I tracked and why
 
